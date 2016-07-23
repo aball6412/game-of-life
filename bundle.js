@@ -59,6 +59,10 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
+	var _cell = __webpack_require__(/*! ./components/cell */ 172);
+	
+	var _cell2 = _interopRequireDefault(_cell);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66,8 +70,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	console.log("All systems nominal");
 	
 	var App = function (_React$Component) {
 	    _inherits(App, _React$Component);
@@ -78,25 +80,67 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 	
 	        _this.state = {
-	            active: "yes"
+	            run: true,
+	            board: [true, true, true, false],
+	            clear: false,
+	            generation: 0
 	        };
+	
+	        _this.update_board(true, false, false);
 	
 	        return _this;
 	    } //End constructor
 	
 	
 	    _createClass(App, [{
+	        key: "update_board",
+	        value: function update_board(start, add, clear) {
+	
+	            //If we're starting the game fresh for the first time...
+	            if (start) {
+	
+	                var board = [];
+	
+	                for (var i = 1; i <= 1500; i++) {
+	
+	                    //Find random number with 50% probability
+	                    var random_number = Math.random();
+	
+	                    if (random_number >= .5) {
+	
+	                        board.push(true);
+	                    } else {
+	
+	                        board.push(false);
+	                    }
+	                } //End for statement statement
+	
+	                console.log("hello");
+	                this.setState({ board: board });
+	            } //End big if (start) statement
+	
+	        } //End update_board function
+	
+	
+	    }, {
 	        key: "render",
 	        value: function render() {
 	
+	            //Get initial variables
+	            var board = this.state.board;
+	            var cells = [];
+	
+	            //For each cell on the board put in a "Cell" component
+	            //Push into the cells list
+	            for (var i in board) {
+	
+	                cells.push(_react2.default.createElement(_cell2.default, { key: i }));
+	            }
+	
 	            return _react2.default.createElement(
 	                "div",
-	                { className: "header" },
-	                _react2.default.createElement(
-	                    "h2",
-	                    null,
-	                    "In the React script"
-	                )
+	                { className: "board" },
+	                cells
 	            );
 	        }
 	    }]);
@@ -21693,6 +21737,33 @@
 	var ReactMount = __webpack_require__(/*! ./ReactMount */ 164);
 	
 	module.exports = ReactMount.renderSubtreeIntoContainer;
+
+/***/ },
+/* 172 */
+/*!****************************!*\
+  !*** ./components/cell.js ***!
+  \****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Cell = function Cell(props) {
+	
+	    return _react2.default.createElement("div", { className: "cell" });
+	}; //End Cell component
+	
+	
+	exports.default = Cell;
 
 /***/ }
 /******/ ]);

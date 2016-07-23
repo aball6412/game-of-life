@@ -1,7 +1,7 @@
-console.log("All systems nominal");
-
 import React from "react";
 import ReactDOM from "react-dom";
+
+import Cell from "./components/cell";
 
 
 class App extends React.Component {
@@ -10,19 +10,72 @@ class App extends React.Component {
         super(props);
         
         this.state = {
-            active: "yes"
+            run: true,
+            board: [true, true, true, false],
+            clear: false,
+            generation: 0
         }
+        
+        
+        this.update_board(true, false, false);
         
     } //End constructor
     
     
+    
+    update_board(start, add, clear) {
+        
+        //If we're starting the game fresh for the first time...
+        if (start) {
+            
+            var board = [];
+            
+            for (var i = 1; i <= 1500; i++) {
+                
+                //Find random number with 50% probability
+                var random_number = Math.random();
+                
+                if(random_number >= .5) {
+                    
+                    board.push(true);
+                }
+                else {
+                    
+                    board.push(false);
+                }
+                
+            } //End for statement statement
+            
+            console.log("hello");
+            this.setState({ board: board });
+            
+            
+        } //End big if (start) statement
+    
+
+        
+        
+    } //End update_board function
+    
+    
     render() {
+        
+        //Get initial variables
+        var board = this.state.board;
+        var cells = [];
+        
+        //For each cell on the board put in a "Cell" component
+        //Push into the cells list
+        for (var i in board) {
+            
+            cells.push(<Cell key={i} />)
+        }
         
         return (
         
-            <div className="header">
+            <div className="board">
             
-                <h2>In the React script</h2>
+                { cells }
             
             </div>
             
