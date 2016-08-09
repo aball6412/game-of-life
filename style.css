@@ -28,6 +28,8 @@ body h1 {
     height: 361px;
 }
 
+/****** .cell and .alive_cell need to be exact same except for background color ********/
+
 .cell {
     border-right: solid;
     border-bottom: solid;
@@ -35,5 +37,14 @@ body h1 {
     border-width: 1px;
     height: 12px;
     width: 12px;
-    font-size: xx-small;
+}
+
+.alive_cell {
+    background: red;
+    border-right: solid;
+    border-bottom: solid;
+    float: left;
+    border-width: 1px;
+    height: 12px;
+    width: 12px;
 }

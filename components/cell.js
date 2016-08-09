@@ -4,15 +4,34 @@ import React from "react";
 
 var Cell = function(props) {
     
-
+    var cell_state = props.cell_state;
     
-    return (
-    
-        <div className="cell">
-
+    if (cell_state === false) {
         
-        </div>
-    );
+        return (
+    
+            <div className="cell">
+
+
+            </div>
+        );
+        
+    }
+    
+    else {
+        
+        return (
+            
+            <div className="alive_cell">
+            
+            
+            </div>
+        
+        );
+        
+    }
+    
+    
     
 } //End Cell component
 

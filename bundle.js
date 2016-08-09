@@ -77,6 +77,7 @@
 	    function App(props) {
 	        _classCallCheck(this, App);
 	
+	        //Starting game for the first time
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 	
 	        var board = [];
@@ -114,31 +115,7 @@
 	
 	    _createClass(App, [{
 	        key: "update_board",
-	        value: function update_board(start, add, clear) {
-	
-	            //If we're starting the game fresh for the first time...
-	            if (start) {
-	
-	                var board = [];
-	
-	                for (var i = 1; i <= 1500; i++) {
-	
-	                    //Find random number with 50% probability
-	                    var random_number = Math.random();
-	
-	                    if (random_number >= .5) {
-	
-	                        board.push(true);
-	                    } else {
-	
-	                        board.push(false);
-	                    }
-	                } //End for statement statement
-	
-	
-	                this.setState({ board: board });
-	            } //End big if (start) statement
-	        } //End update_board function
+	        value: function update_board(add, clear) {} //End update_board function
 	
 	
 	    }, {
@@ -153,7 +130,7 @@
 	            //Push into the cells list
 	            for (var i in board) {
 	
-	                cells.push(_react2.default.createElement(_cell2.default, { key: i }));
+	                cells.push(_react2.default.createElement(_cell2.default, { key: i, cell_state: board[i] }));
 	            }
 	
 	            return _react2.default.createElement(
@@ -21778,7 +21755,15 @@
 	
 	var Cell = function Cell(props) {
 	
-	    return _react2.default.createElement("div", { className: "cell" });
+	    var cell_state = props.cell_state;
+	
+	    if (cell_state === false) {
+	
+	        return _react2.default.createElement("div", { className: "cell" });
+	    } else {
+	
+	        return _react2.default.createElement("div", { className: "alive_cell" });
+	    }
 	}; //End Cell component
 	
 	

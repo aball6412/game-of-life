@@ -9,6 +9,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         
+        //Starting game for the first time
         var board = [];
             
             for (var i = 1; i <= 1500; i++) {
@@ -46,33 +47,9 @@ class App extends React.Component {
     
 
     
-    update_board(start, add, clear) {
+    update_board(add, clear) {
         
-        //If we're starting the game fresh for the first time...
-        if (start) {
-            
-            var board = [];
-            
-            for (var i = 1; i <= 1500; i++) {
-                
-                //Find random number with 50% probability
-                var random_number = Math.random();
-                
-                if(random_number >= .5) {
-                    
-                    board.push(true);
-                }
-                else {
-                    
-                    board.push(false);
-                }
-                
-            } //End for statement statement
-            
-
-            this.setState({ board: board });
-   
-        } //End big if (start) statement
+       
  
     } //End update_board function
     
@@ -89,8 +66,8 @@ class App extends React.Component {
         //For each cell on the board put in a "Cell" component
         //Push into the cells list
         for (var i in board) {
-            
-            cells.push(<Cell key={i} />)
+
+            cells.push(<Cell key={i} cell_state={ board[i] } />)
         }
         
         return (
