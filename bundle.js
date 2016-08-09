@@ -87,17 +87,21 @@
 	            //Find random number with 50% probability
 	            var random_number = Math.random();
 	
-	            if (random_number >= .5) {
+	            //                if(random_number >= .5) {
+	            //                    
+	            //                    board.push(true);
+	            //                }
+	            //                else {
+	            //                    
+	            //                    board.push(false);
+	            //                }
 	
-	                board.push(true);
-	            } else {
-	
-	                board.push(false);
-	            }
+	            board.push(false);
 	        } //End for statement statement
 	
+	        board[0] = true;
 	
-	        // TEST LIST FOR BOARD: [true, true, true, false]
+	        console.log(board);
 	
 	        _this.state = {
 	            run: true,
@@ -106,8 +110,10 @@
 	            generation: 0
 	        };
 	
-	        //this.update_board(true, false, false);
-	
+	        //Set interval timer to constantly update board
+	        var set_board = setInterval(function () {
+	            _this.update_board(board);
+	        }, 1000);
 	
 	        return _this;
 	    } //End constructor
@@ -115,7 +121,21 @@
 	
 	    _createClass(App, [{
 	        key: "update_board",
-	        value: function update_board(add, clear) {} //End update_board function
+	        value: function update_board(board, add, clear) {
+	
+	            console.log("I'm updating the board");
+	
+	            for (var i in board) {
+	
+	                if (board[i] === true) {
+	                    board[i] = false;
+	                    board[Number(i) + 1] = true;
+	                    break;
+	                }
+	            }
+	
+	            this.setState({ board: board });
+	        } //End update_board function
 	
 	
 	    }, {
@@ -128,9 +148,9 @@
 	
 	            //For each cell on the board put in a "Cell" component
 	            //Push into the cells list
-	            for (var i in board) {
+	            for (var i = 0; i < board.length; i++) {
 	
-	                cells.push(_react2.default.createElement(_cell2.default, { key: i, cell_state: board[i] }));
+	                cells.push(_react2.default.createElement(_cell2.default, { key: i, cell_state: board[i], board_length: board.length, count: i, update_board: this.update_board }));
 	            }
 	
 	            return _react2.default.createElement(
@@ -21755,7 +21775,13 @@
 	
 	var Cell = function Cell(props) {
 	
+	    //Get initial variables needed
 	    var cell_state = props.cell_state;
+	    var board_length = props.board_length;
+	    var count = props.count;
+	
+	    //Get functions
+	    var update_board = props.update_board;
 	
 	    if (cell_state === false) {
 	
