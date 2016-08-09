@@ -79,14 +79,34 @@
 	
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 	
+	        var board = [];
+	
+	        for (var i = 1; i <= 1500; i++) {
+	
+	            //Find random number with 50% probability
+	            var random_number = Math.random();
+	
+	            if (random_number >= .5) {
+	
+	                board.push(true);
+	            } else {
+	
+	                board.push(false);
+	            }
+	        } //End for statement statement
+	
+	
+	        // TEST LIST FOR BOARD: [true, true, true, false]
+	
 	        _this.state = {
 	            run: true,
-	            board: [true, true, true, false],
+	            board: board,
 	            clear: false,
 	            generation: 0
 	        };
 	
-	        _this.update_board(true, false, false);
+	        //this.update_board(true, false, false);
+	
 	
 	        return _this;
 	    } //End constructor
@@ -115,10 +135,9 @@
 	                    }
 	                } //End for statement statement
 	
-	                console.log("hello");
+	
 	                this.setState({ board: board });
 	            } //End big if (start) statement
-	
 	        } //End update_board function
 	
 	

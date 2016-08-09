@@ -1,15 +1,39 @@
+html {
+
+}
+
+body {
+
+}
+
+body h1 {
+
+}
+
+.app {
+
+}
+
+
+
 .board {
-    border: solid;
+    border-top: solid;
+    border-left: solid;
+    border-width: 1px;
     margin-left: auto;
     margin-right: auto;
-    width: 650px;
-    height: 390px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 601px;
+    height: 361px;
 }
 
 .cell {
-    border: solid;
+    border-right: solid;
+    border-bottom: solid;
     float: left;
     border-width: 1px;
     height: 12px;
     width: 12px;
+    font-size: xx-small;
 }
