@@ -17,24 +17,26 @@ class App extends React.Component {
                 //Find random number with 50% probability
                 var random_number = Math.random();
                 
-//                if(random_number >= .5) {
-//                    
-//                    board.push(true);
-//                }
-//                else {
-//                    
-//                    board.push(false);
-//                }
+                if(random_number >= .5) {
+                    
+                    board.push(true);
+                }
+                else {
+                    
+                    board.push(false);
+                }
                 
-                board.push(false);
+
 
                 
             } //End for statement statement
+
         
-            board[0] = true;
-        
-            console.log(board);
-        
+//        board[347] = true;
+//        board[346] = true;
+//        board[296] = true;
+//        board[397] = true;
+      
         this.state = {
             run: true,
             board: board,
@@ -44,7 +46,7 @@ class App extends React.Component {
 
         
         //Set interval timer to constantly update board
-        var set_board = setInterval(() => { this.update_board(board) }, 1000);
+        var set_board = setInterval(() => { this.update_board(this.state.board) }, 100);
 
         
     } //End constructor
@@ -53,19 +55,332 @@ class App extends React.Component {
     
     update_board(board, add, clear) {
         
-       console.log("I'm updating the board");
+   
+        //Set up new, blank board
+        var new_board = [];
+        
+        //Create function to find number of neighbors
+        var number_of_neighbors = function(index) {
+            
+            
+            //Find out if index is an edge
+            var is_edge = function(index) {
+  
+                var edge = false;
+                
+                if (index === 0) {
+                    edge = "top-left";
+                    return edge;
+                }
+                else if (index === 49) {
+                    edge = "top-right";
+                    return edge;
+                }
+                else if (index === 1450) {
+                    edge = "bottom-left";
+                    return edge;
+                }
+                else if (index === 1499) {
+                    edge = "bottom-right";
+                    return edge;
+                }
+                else if (index >= 0 && index <= 49) {
+                    edge = "top";
+                    return edge;
+                }
+                else if (index >= 1450 && index <= 1499) {
+                    edge = "bottom";
+                    return edge;
+                }
+                else if (index % 50 === 0) {
+                    edge = "left";
+                    return edge;
+                }
+                else if ((index + 1) % 50 === 0) {
+                    edge = "right";
+                    return edge;
+                }
+                else {
+                    return edge;
+                }
+                
+            }
+            
+            var edge = is_edge(index);
+
+
+            
+            
+            if (edge === false) {
+                
+                var neighbors = [];
+                var count = 0;
+                
+                //Get value of all eight surrounding cells
+                neighbors.push(board[index - 50 - 1]);
+                neighbors.push(board[index - 50]);
+                neighbors.push(board[index - 50 + 1]);
+                neighbors.push(board[index - 1]);
+                neighbors.push(board[index + 1]);
+                neighbors.push(board[index + 50 - 1]);
+                neighbors.push(board[index + 50]);
+                neighbors.push(board[index + 50 + 1]);
+
+                //See how many neighbors are active
+                for (var i in neighbors) {
+                    if (neighbors[i] === true) {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+            
+            if (edge === "right"){
+                
+                var neighbors = [];
+                var count = 0;
+                
+                //Get value of eight surrounding cells (infinite board)
+                neighbors.push(board[index - 50 - 1]);
+                neighbors.push(board[index - 50]);
+                neighbors.push(board[index - 50 - 49]);
+                neighbors.push(board[index - 1]);
+                neighbors.push(board[index - 49]);
+                neighbors.push(board[index + 50 - 1]);
+                neighbors.push(board[index + 50]);
+                neighbors.push(board[index + 50 - 49])
+                
+                //See how many neighbors are active
+                for (var i in neighbors) {
+                    if (neighbors[i] === true) {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+            
+            if (edge === "left") {
+                
+                var neighbors = [];
+                var count = 0;
+                
+                //Get value of eight surrounding cells (infinite board)
+                neighbors.push(board[index - 50 + 49]);
+                neighbors.push(board[index - 50]);
+                neighbors.push(board[index - 50 + 1]);
+                neighbors.push(board[index + 49]);
+                neighbors.push(board[index + 1]);
+                neighbors.push(board[index + 50 + 49]);
+                neighbors.push(board[index + 50]);
+                neighbors.push(board[index + 50 + 1]);
+                
+                //See how many neighbors are active
+                for (var i in neighbors) {
+                    if (neighbors[i] === true) {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+            
+            if (edge === "top") {
+                
+                var neighbors = [];
+                var count = 0;
+                
+                //Get value of eight surrounding cells (infinite board)
+                neighbors.push(board[index + 1450 - 1]);
+                neighbors.push(board[index + 1450]);
+                neighbors.push(board[index + 1450 + 1]);
+                neighbors.push(board[index - 1]);
+                neighbors.push(board[index + 1]);
+                neighbors.push(board[index + 50 - 1]);
+                neighbors.push(board[index + 50]);
+                neighbors.push(board[index + 50 + 1]);
+                
+                //See how many neighbors are active
+                for (var i in neighbors) {
+                    if (neighbors[i] === true) {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+            
+            if (edge === "bottom") {
+                
+                var neighbors = [];
+                var count = 0;
+                
+                //Get value of eight surrounding cells (infinite board)
+                neighbors.push(board[index - 50 - 1]);
+                neighbors.push(board[index - 50]);
+                neighbors.push(board[index - 50 + 1]);
+                neighbors.push(board[index - 1]);
+                neighbors.push(board[index + 1]);
+                neighbors.push(board[index - 1450 - 1]);
+                neighbors.push(board[index - 1450]);
+                neighbors.push(board[index - 1450 + 1]);
+                
+                //See how many neighbors are active
+                for (var i in neighbors) {
+                    if (neighbors[i] === true) {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+            
+            if (edge === "top-left") {
+                
+                var neighbors = [];
+                var count = 0;
+                
+                //Get value of eight surrounding cells (infinite board)
+                neighbors.push(board[1499]);
+                neighbors.push(board[index + 1450]);
+                neighbors.push(board[index + 1450 + 1]);
+                neighbors.push(board[index + 49]);
+                neighbors.push(board[index + 1]);
+                neighbors.push(board[index + 50 + 49]);
+                neighbors.push(board[index + 50]);
+                neighbors.push(board[index + 50 + 1]);
+                
+                //See how many neighbors are active
+                for (var i in neighbors) {
+                    if (neighbors[i] === true) {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+            
+            if (edge === "top-right") {
+                
+                var neighbors = [];
+                var count = 0;
+                
+                //Get value of eight surrounding cells (infinite board)
+                neighbors.push(board[index + 1450 - 1]);
+                neighbors.push(board[index + 1450]);
+                neighbors.push(board[1450]);
+                neighbors.push(board[index - 1]);
+                neighbors.push(board[index - 49]);
+                neighbors.push(board[index + 50 - 1]);
+                neighbors.push(board[index + 50]);
+                neighbors.push(board[index + 50 - 49]);
+                
+                //See how many neighbors are active
+                for (var i in neighbors) {
+                    if (neighbors[i] === true) {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+            
+            if (edge === "bottom-left") {
+                
+                var neighbors = [];
+                var count = 0;
+                
+                //Get value of eight surrounding cells (infinite board)
+                neighbors.push(board[index - 50 + 49]);
+                neighbors.push(board[index - 50]);
+                neighbors.push(board[index - 50 + 1]);
+                neighbors.push(board[index + 49]);
+                neighbors.push(board[index + 1]);
+                neighbors.push(board[49]);
+                neighbors.push(board[index - 1450]);
+                neighbors.push(board[index - 1450 + 1]);
+                
+                //See how many neighbors are active
+                for (var i in neighbors) {
+                    if (neighbors[i] === true) {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+            
+            if (edge === "bottom-right") {
+                
+                var neighbors = [];
+                var count = 0;
+                
+                //Get value of eight surrounding cells (infinite board)
+                neighbors.push(board[index - 50 - 1]);
+                neighbors.push(board[index - 50]);
+                neighbors.push(board[index - 50 - 49]);
+                neighbors.push(board[index - 1]);
+                neighbors.push(board[index - 49]);
+                neighbors.push(board[index - 1450 - 1]);
+                neighbors.push(board[index - 1450]);
+                neighbors.push(board[0]);
+                
+                //See how many neighbors are active
+                for (var i in neighbors) {
+                    if (neighbors[i] === true) {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+            
+
+        } //End number of neighbors function
+        
+
+
+
+
         
         for (var i in board) {
             
-            if (board[i] === true) {
-                board[i] = false;
-                board[Number(i) + 1] = true;
-                break;
+            
+            var neighbors_number = number_of_neighbors(Number(i));
+
+            
+            //If current cell is live then...
+            if (board[i]) {
+                
+                if (neighbors_number < 2) {
+                    new_board.push(false);
+                }
+                else if (neighbors_number === 2 || neighbors_number === 3) {
+                    new_board.push(true);
+                }
+                else if (neighbors_number > 3) {
+                    new_board.push(false);
+                }
+                
             }
             
-        }
+            else {
+                
+                if (neighbors_number === 3) {
+                    new_board.push(true);
+                }
+                else {
+                    new_board.push(false);
+                }
+            }
+ 
+
+            
+        } //End big for loop
         
-        this.setState({ board: board });
+        
+        this.setState({ board: new_board });
  
     } //End update_board function
     

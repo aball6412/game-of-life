@@ -12,13 +12,15 @@ var Cell = function(props) {
     //Get functions
     var update_board = props.update_board;
     
-
+    
+    var cell_class = "cell cell" + count;
+    var alive_cell_class = "alive_cell cell" + count;
     
     
     if (cell_state === false) {
 
         return (
-            <div className="cell"></div>
+            <div className={ cell_class }></div>
         );
 
     }
@@ -26,7 +28,7 @@ var Cell = function(props) {
     else {
 
         return (
-            <div className="alive_cell"></div>
+            <div className={ alive_cell_class }></div>
         );
 
     }
