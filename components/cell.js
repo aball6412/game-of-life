@@ -6,13 +6,12 @@ var Cell = function(props) {
     
     //Get initial variables needed
     var cell_state = props.cell_state;
-    var board_length = props.board_length;
     var count = props.count;
     
     //Get functions
-    var update_board = props.update_board;
+    var add_cell = props.add_cell;
     
-    
+    //Set up div class names
     var cell_class = "cell cell" + count;
     var alive_cell_class = "alive_cell cell" + count;
     
@@ -20,7 +19,7 @@ var Cell = function(props) {
     if (cell_state === false) {
 
         return (
-            <div className={ cell_class }></div>
+            <div onClick={ () => { add_cell(count, cell_state) } } className={ cell_class }></div>
         );
 
     }
@@ -28,7 +27,7 @@ var Cell = function(props) {
     else {
 
         return (
-            <div className={ alive_cell_class }></div>
+            <div onClick={ () => { add_cell(count, cell_state) } } className={ alive_cell_class }></div>
         );
 
     }

@@ -1,5 +1,17 @@
 .buttons {
     border: solid;
+    width: 601px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.buttons .stop {
+    margin-left: 15px;
+}
+
+.buttons .clear {
+    margin-left: 15px;
 }
 
 

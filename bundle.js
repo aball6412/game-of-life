@@ -83,7 +83,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	//Import project modules
+	//Import project modules that we created
 	
 	
 	var App = function (_React$Component) {
@@ -112,17 +112,25 @@
 	        } //End for statement statement
 	
 	
-	        _this.state = {
-	            run: true,
-	            board: board,
-	            clear: false,
-	            generation: 0
-	        };
-	
 	        //Set interval timer to constantly update board
 	        var set_board = setInterval(function () {
 	            _this.update_board(_this.state.board);
 	        }, 100);
+	        var test = "testing the click and passing variables";
+	
+	        _this.start_game = _this.start_game.bind(_this);
+	        _this.stop_game = _this.stop_game.bind(_this);
+	        _this.clear_game = _this.clear_game.bind(_this);
+	        _this.add_cell = _this.add_cell.bind(_this);
+	
+	        //Set the state
+	        _this.state = {
+	            run: true,
+	            board: board,
+	            clear: false,
+	            generation: 0,
+	            interval_id: set_board
+	        };
 	
 	        return _this;
 	    } //End constructor
@@ -130,7 +138,7 @@
 	
 	    _createClass(App, [{
 	        key: "update_board",
-	        value: function update_board(board, add, clear) {
+	        value: function update_board(board) {
 	
 	            //Set up new, blank board
 	            var new_board = [];
@@ -426,10 +434,69 @@
 	            } //End big for loop
 	
 	
-	            this.setState({ board: new_board });
+	            //Check to see if all cells are dead
+	            var check_empty_board = new_board.includes(true);
+	
+	            if (check_empty_board) {
+	                this.setState({ board: new_board, generation: this.state.generation + 1 });
+	            } else {
+	                this.clear_game(this.stop_game);
+	            }
 	        } //End update_board function
 	
+	    }, {
+	        key: "stop_game",
+	        value: function stop_game() {
+	            clearInterval(this.state.interval_id);
+	        }
+	    }, {
+	        key: "start_game",
+	        value: function start_game() {
+	            var _this2 = this;
 	
+	            //Set the interval again
+	            var set_board = setInterval(function () {
+	                _this2.update_board(_this2.state.board);
+	            }, 100);
+	
+	            //Add interval to state
+	            this.setState({ interval_id: set_board });
+	        }
+	    }, {
+	        key: "clear_game",
+	        value: function clear_game(stop_game) {
+	
+	            //Stop the current game
+	            clearInterval(this.state.interval_id);
+	
+	            //Create empty board and fill it with dead cells
+	            var board = [];
+	
+	            for (var i = 1; i <= 1500; i++) {
+	                board.push(false);
+	            }
+	
+	            this.setState({ board: board, generation: 0 });
+	        }
+	    }, {
+	        key: "add_cell",
+	        value: function add_cell(index, cell_state) {
+	
+	            //Get the board
+	            var board = this.state.board;
+	
+	            //If clicked cell state is active (true) then make it inactive (false)
+	            //If clicked cell state is inactive then make it active
+	            if (cell_state) {
+	
+	                board[index] = false;
+	            } else {
+	                board[index] = true;
+	            }
+	
+	            //Update the board
+	            this.setState({ board: board });
+	        }
 	    }, {
 	        key: "render",
 	        value: function render() {
@@ -442,7 +509,7 @@
 	            //Push into the cells list
 	            for (var i = 0; i < board.length; i++) {
 	
-	                cells.push(_react2.default.createElement(_cell2.default, { key: i, cell_state: board[i], board_length: board.length, count: i, update_board: this.update_board }));
+	                cells.push(_react2.default.createElement(_cell2.default, { key: i, cell_state: board[i], count: i, add_cell: this.add_cell }));
 	            }
 	
 	            return _react2.default.createElement(
@@ -451,9 +518,15 @@
 	                _react2.default.createElement(
 	                    "div",
 	                    { className: "buttons" },
-	                    _react2.default.createElement(_start2.default, null),
-	                    _react2.default.createElement(_stop2.default, null),
-	                    _react2.default.createElement(_clear2.default, null)
+	                    _react2.default.createElement(_start2.default, { start_game: this.start_game }),
+	                    _react2.default.createElement(_stop2.default, { stop_game: this.stop_game }),
+	                    _react2.default.createElement(_clear2.default, { clear_game: this.clear_game, stop_game: this.stop_game }),
+	                    _react2.default.createElement(
+	                        "h4",
+	                        null,
+	                        "Generation: ",
+	                        this.state.generation
+	                    )
 	                ),
 	                _react2.default.createElement(
 	                    "div",
@@ -22080,21 +22153,25 @@
 	
 	    //Get initial variables needed
 	    var cell_state = props.cell_state;
-	    var board_length = props.board_length;
 	    var count = props.count;
 	
 	    //Get functions
-	    var update_board = props.update_board;
+	    var add_cell = props.add_cell;
 	
+	    //Set up div class names
 	    var cell_class = "cell cell" + count;
 	    var alive_cell_class = "alive_cell cell" + count;
 	
 	    if (cell_state === false) {
 	
-	        return _react2.default.createElement("div", { className: cell_class });
+	        return _react2.default.createElement("div", { onClick: function onClick() {
+	                add_cell(count, cell_state);
+	            }, className: cell_class });
 	    } else {
 	
-	        return _react2.default.createElement("div", { className: alive_cell_class });
+	        return _react2.default.createElement("div", { onClick: function onClick() {
+	                add_cell(count, cell_state);
+	            }, className: alive_cell_class });
 	    }
 	}; //End Cell component
 	
@@ -22122,9 +22199,14 @@
 	
 	var Stop = function Stop(props) {
 	
+	    //Get functions
+	    var stop_game = props.stop_game;
+	
 	    return _react2.default.createElement(
 	        "button",
-	        { type: "button", className: "btn btn-default" },
+	        { onClick: function onClick() {
+	                stop_game();
+	            }, type: "button", className: "btn btn-default stop" },
 	        "Stop"
 	    );
 	}; //End stop component
@@ -22153,9 +22235,14 @@
 	
 	var Start = function Start(props) {
 	
+	    //Get functions
+	    var start_game = props.start_game;
+	
 	    return _react2.default.createElement(
 	        "button",
-	        { type: "button", className: "btn btn-default" },
+	        { onClick: function onClick() {
+	                start_game();
+	            }, type: "button", className: "btn btn-default start" },
 	        "Start"
 	    );
 	}; //End start module
@@ -22184,9 +22271,15 @@
 	
 	var Clear = function Clear(props) {
 	
+	    //Get functions
+	    var clear_game = props.clear_game;
+	    var stop_game = props.stop_game;
+	
 	    return _react2.default.createElement(
 	        "button",
-	        { type: "button", className: "btn btn-default" },
+	        { onClick: function onClick() {
+	                clear_game(stop_game);
+	            }, type: "button", className: "btn btn-default clear" },
 	        "Clear"
 	    );
 	}; //End clear component

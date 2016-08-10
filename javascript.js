@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-//Import project modules
+//Import project modules that we created
 import Cell from "./components/cell";
 import Stop from "./components/stop";
 import Start from "./components/start";
@@ -32,24 +32,35 @@ class App extends React.Component {
         
             } //End for statement statement
 
+        
+        
+        //Set interval timer to constantly update board
+        var set_board = setInterval(() => { this.update_board(this.state.board) }, 100);
+        var test = "testing the click and passing variables";
       
+        this.start_game = this.start_game.bind(this);
+        this.stop_game = this.stop_game.bind(this);
+        this.clear_game = this.clear_game.bind(this);
+        this.add_cell = this.add_cell.bind(this);
+        
+        //Set the state
         this.state = {
             run: true,
             board: board,
             clear: false,
-            generation: 0
+            generation: 0,
+            interval_id: set_board
         }
 
         
-        //Set interval timer to constantly update board
-        var set_board = setInterval(() => { this.update_board(this.state.board) }, 100);
+        
 
         
     } //End constructor
     
 
     
-    update_board(board, add, clear) {
+    update_board(board) {
         
    
         //Set up new, blank board
@@ -372,28 +383,80 @@ class App extends React.Component {
         } //End big for loop
         
         
-        this.setState({ board: new_board });
+        //Check to see if all cells are dead
+        var check_empty_board = new_board.includes(true);
+        
+        if (check_empty_board) {
+            this.setState({ board: new_board, generation: this.state.generation + 1 });
+        }
+        else {
+            this.clear_game(this.stop_game);
+        }
  
     } //End update_board function
     
+    stop_game() {
+        clearInterval(this.state.interval_id); 
+    }
     
+    start_game() {
+        
+        //Set the interval again
+        var set_board = setInterval(() => { this.update_board(this.state.board) }, 100);
+        
+        //Add interval to state
+        this.setState({ interval_id: set_board });
+    }
     
+    clear_game(stop_game) {
+        
+        //Stop the current game
+        clearInterval(this.state.interval_id);
+
+        //Create empty board and fill it with dead cells
+        var board = [];
+        
+        
+        for (var i = 1; i <= 1500; i++) { 
+            board.push(false);
+        }
+        
+        
+        this.setState({ board: board, generation: 0 });
+        
+    }
     
+    add_cell(index, cell_state) {
+           
+        //Get the board
+        var board = this.state.board;
+        
+        //If clicked cell state is active (true) then make it inactive (false)
+        //If clicked cell state is inactive then make it active
+        if (cell_state) {
+            
+            board[index] = false;
+        }
+        else {
+            board[index] = true;
+        }
+        
+
+        //Update the board
+        this.setState({ board: board });
+    }
     
     render() {
         
         //Get initial variables
         var board = this.state.board;
         var cells = [];
-        
-
-        
-        
+ 
         //For each cell on the board put in a "Cell" component
         //Push into the cells list
         for (var i = 0; i < board.length; i++) {
             
-            cells.push(<Cell key={ i } cell_state={ board[i] } board_length={ board.length } count={ i } update_board={ this.update_board } />)
+            cells.push(<Cell key={ i } cell_state={ board[i] } count={ i } add_cell={ this.add_cell }/>)
                        
         }
         
@@ -403,9 +466,11 @@ class App extends React.Component {
 
             <div>
                 <div className="buttons">
-                           <Start />
-                           <Stop />
-                           <Clear />
+                           <Start start_game={ this.start_game  } />
+                           <Stop stop_game={ this.stop_game } />
+                           <Clear clear_game={ this.clear_game } stop_game={ this.stop_game } />
+                            
+                            <h4>Generation: { this.state.generation }</h4>
                 </div>
 
                 <div className="board">
