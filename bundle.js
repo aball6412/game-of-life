@@ -63,6 +63,18 @@
 	
 	var _cell2 = _interopRequireDefault(_cell);
 	
+	var _stop = __webpack_require__(/*! ./components/stop */ 173);
+	
+	var _stop2 = _interopRequireDefault(_stop);
+	
+	var _start = __webpack_require__(/*! ./components/start */ 174);
+	
+	var _start2 = _interopRequireDefault(_start);
+	
+	var _clear = __webpack_require__(/*! ./components/clear */ 175);
+	
+	var _clear2 = _interopRequireDefault(_clear);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70,6 +82,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	//Import project modules
+	
 	
 	var App = function (_React$Component) {
 	    _inherits(App, _React$Component);
@@ -96,11 +111,6 @@
 	            }
 	        } //End for statement statement
 	
-	
-	        //        board[347] = true;
-	        //        board[346] = true;
-	        //        board[296] = true;
-	        //        board[397] = true;
 	
 	        _this.state = {
 	            run: true,
@@ -437,8 +447,19 @@
 	
 	            return _react2.default.createElement(
 	                "div",
-	                { className: "board" },
-	                cells
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "buttons" },
+	                    _react2.default.createElement(_start2.default, null),
+	                    _react2.default.createElement(_stop2.default, null),
+	                    _react2.default.createElement(_clear2.default, null)
+	                ),
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "board" },
+	                    cells
+	                )
 	            );
 	        }
 	    }]);
@@ -22079,6 +22100,99 @@
 	
 	
 	exports.default = Cell;
+
+/***/ },
+/* 173 */
+/*!****************************!*\
+  !*** ./components/stop.js ***!
+  \****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Stop = function Stop(props) {
+	
+	    return _react2.default.createElement(
+	        "button",
+	        { type: "button", className: "btn btn-default" },
+	        "Stop"
+	    );
+	}; //End stop component
+	
+	
+	exports.default = Stop;
+
+/***/ },
+/* 174 */
+/*!*****************************!*\
+  !*** ./components/start.js ***!
+  \*****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Start = function Start(props) {
+	
+	    return _react2.default.createElement(
+	        "button",
+	        { type: "button", className: "btn btn-default" },
+	        "Start"
+	    );
+	}; //End start module
+	
+	
+	exports.default = Start;
+
+/***/ },
+/* 175 */
+/*!*****************************!*\
+  !*** ./components/clear.js ***!
+  \*****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Clear = function Clear(props) {
+	
+	    return _react2.default.createElement(
+	        "button",
+	        { type: "button", className: "btn btn-default" },
+	        "Clear"
+	    );
+	}; //End clear component
+	
+	
+	exports.default = Clear;
 
 /***/ }
 /******/ ]);

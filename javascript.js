@@ -1,7 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+//Import project modules
 import Cell from "./components/cell";
+import Stop from "./components/stop";
+import Start from "./components/start";
+import Clear from "./components/clear";
 
 
 class App extends React.Component {
@@ -25,17 +29,9 @@ class App extends React.Component {
                     
                     board.push(false);
                 }
-                
-
-
-                
+        
             } //End for statement statement
 
-        
-//        board[347] = true;
-//        board[346] = true;
-//        board[296] = true;
-//        board[397] = true;
       
         this.state = {
             run: true,
@@ -339,10 +335,6 @@ class App extends React.Component {
 
         } //End number of neighbors function
         
-
-
-
-
         
         for (var i in board) {
             
@@ -409,12 +401,20 @@ class App extends React.Component {
         
         return (
 
-            <div className="board">
+            <div>
+                <div className="buttons">
+                           <Start />
+                           <Stop />
+                           <Clear />
+                </div>
 
-                { cells }
+                <div className="board">
 
-            </div>
+                    { cells }
+
+                </div>
  
+            </div>
         );
 
         
