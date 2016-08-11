@@ -1,9 +1,39 @@
+
+body{
+    background: rgba(34, 92, 255, 0.53);
+    margin: 50px;
+}
+
+body h1 {
+    font-family: 'Press Start 2P', cursive;
+    color: #FFFFFF;
+}
+
+
+.app {
+    margin-top: 25px;
+}
+
+.game_holder {
+    background: #333333;
+	border: solid;
+	border-radius: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 651px;
+}
+
 .buttons {
-    border: solid;
+    border-bottom: solid;
     width: 601px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 25px;
     text-align: center;
+}
+
+.buttons h4 {
+    color: #FFFFFF;
 }
 
 .buttons .stop {
@@ -30,6 +60,7 @@
 /****** .cell and .alive_cell need to be exact same except for background color ********/
 
 .cell {
+    background: #000000;
     border-right: solid;
     border-bottom: solid;
     float: left;
@@ -39,7 +70,7 @@
 }
 
 .alive_cell {
-    background: red;
+    background: #ee4444;
     border-right: solid;
     border-bottom: solid;
     float: left;

@@ -444,6 +444,7 @@
 	            }
 	        } //End update_board function
 	
+	
 	    }, {
 	        key: "stop_game",
 	        value: function stop_game() {
@@ -514,7 +515,7 @@
 	
 	            return _react2.default.createElement(
 	                "div",
-	                null,
+	                { className: "game_holder" },
 	                _react2.default.createElement(
 	                    "div",
 	                    { className: "buttons" },

@@ -395,9 +395,15 @@ class App extends React.Component {
  
     } //End update_board function
     
+    
+    
+    
     stop_game() {
         clearInterval(this.state.interval_id); 
     }
+    
+    
+    
     
     start_game() {
         
@@ -407,6 +413,10 @@ class App extends React.Component {
         //Add interval to state
         this.setState({ interval_id: set_board });
     }
+    
+    
+    
+    
     
     clear_game(stop_game) {
         
@@ -425,6 +435,10 @@ class App extends React.Component {
         this.setState({ board: board, generation: 0 });
         
     }
+    
+    
+    
+    
     
     add_cell(index, cell_state) {
            
@@ -446,6 +460,11 @@ class App extends React.Component {
         this.setState({ board: board });
     }
     
+    
+    
+    
+    
+    
     render() {
         
         //Get initial variables
@@ -464,7 +483,7 @@ class App extends React.Component {
         
         return (
 
-            <div>
+            <div className="game_holder">
                 <div className="buttons">
                            <Start start_game={ this.start_game  } />
                            <Stop stop_game={ this.stop_game } />
